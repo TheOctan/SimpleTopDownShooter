@@ -1,6 +1,9 @@
+using System;
 using OctanGames.Infrastructure.AssetManagement;
 using OctanGames.Infrastructure.Factory;
 using OctanGames.Services;
+using OctanGames.Services.Input;
+using UnityEngine;
 
 namespace OctanGames.Infrastructure.States
 {
@@ -38,9 +41,20 @@ namespace OctanGames.Infrastructure.States
 
         private void RegisterServices()
         {
+            _serviceLocator.RegisterSingle(InputService());
             _serviceLocator.RegisterSingle<IGameStateMachine>(_stateMachine);
             _serviceLocator.RegisterSingle<IAssetProvider>(new AssetProvider());
-            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(_serviceLocator.Single<IAssetProvider>()));
+
+            var assetProvider = _serviceLocator.Single<IAssetProvider>();
+            var inputService = _serviceLocator.Single<IInputService>();
+            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(assetProvider, inputService));
+        }
+
+        private static IInputService InputService()
+        {
+            if (Application.isEditor) return new StandaloneInputService();
+            if (Application.isMobilePlatform) return new MobileInputService();
+            throw new NotSupportedException("Input is not supported on this platform");
         }
     }
 }
