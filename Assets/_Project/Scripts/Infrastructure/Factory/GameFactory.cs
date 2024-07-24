@@ -1,4 +1,3 @@
-using System;
 using OctanGames.Infrastructure.AssetManagement;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace OctanGames.Infrastructure.Factory
 
         public GameObject CreateHero(Vector3 initialPoint)
         {
-            throw new NotImplementedException();
+            return _assets.Instantiate(AssetPath.PLAYER_PATH, initialPoint);
         }
 
         public void Cleanup()
