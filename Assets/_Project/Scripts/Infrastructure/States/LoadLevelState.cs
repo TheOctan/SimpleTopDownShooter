@@ -43,12 +43,18 @@ namespace OctanGames.Infrastructure.States
 
         private void InitialGameWorld()
         {
-            GameObject player = InitPlayer();
+            InitPlayer();
+            InitHud();
         }
 
         private GameObject InitPlayer()
         {
             return _gameFactory.CreateHero(Vector3.zero);
+        }
+
+        private void InitHud()
+        {
+            _gameFactory.CreateHud();
         }
     }
 }

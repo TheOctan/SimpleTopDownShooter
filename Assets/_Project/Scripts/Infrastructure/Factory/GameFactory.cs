@@ -17,6 +17,11 @@ namespace OctanGames.Infrastructure.Factory
             return _assets.Instantiate(AssetPath.PLAYER_PATH, initialPoint);
         }
 
+        public GameObject CreateHud()
+        {
+            return _assets.Instantiate(AssetPath.HUD_PATH);
+        }
+
         public void Cleanup()
         {
         }
