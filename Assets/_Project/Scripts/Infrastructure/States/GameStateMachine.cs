@@ -13,6 +13,7 @@ namespace OctanGames.Infrastructure.States
         {
             _states = new Dictionary<Type, IExitableState>
             {
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
             };
         }
 

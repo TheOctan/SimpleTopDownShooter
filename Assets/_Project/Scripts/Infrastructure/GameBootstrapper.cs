@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OctanGames.Infrastructure.States;
+using UnityEngine;
 
 namespace OctanGames.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace OctanGames.Infrastructure
         private void Awake()
         {
             _game = new Game(this);
+            _game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);
         }
