@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace OctanGames.Player
 {
-    public class WeaponSlot : MonoBehaviour
+    public class WeaponSlot : MonoBehaviour, IWeaponSlot
     {
         private IGameFactory _gameFactory;
 
@@ -21,10 +21,22 @@ namespace OctanGames.Player
                 [WeaponType.ShotGun] = _gameFactory.CreateWeapon(WeaponType.ShotGun, transform, false),
             };
 
+            SwitchWeapon(WeaponType.Gun);
+
             return this;
         }
 
-        
+        public void SwitchWeapon(WeaponType weaponType)
+        {
+            if (!_weapons.TryGetValue(weaponType, out GameObject weapon)) return;
+
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.SetActive(false);
+            }
+            _currentWeapon = weapon;
+            _currentWeapon.SetActive(true);
+        }
 
         public void Fire()
         {

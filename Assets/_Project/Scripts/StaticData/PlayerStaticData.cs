@@ -6,6 +6,6 @@ namespace OctanGames.StaticData
     public class PlayerStaticData : ScriptableObject
     {
         public float MovementSpeed = 7;
-        public float AttackRadius = 10f;
+        public float AimRadius = 5f;
     }
 }

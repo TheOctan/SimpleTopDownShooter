@@ -1,36 +1,38 @@
 ﻿using OctanGames.Services.Input;
+using OctanGames.Weapon;
 using UnityEngine;
 
 namespace OctanGames.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
-        [Header("Properties")]
-        [SerializeField] private float _attackRadius = 5f;
-        [Header("Components")]
-        [SerializeField] private WeaponSlot _weaponSlot;
-
         private IInputService _inputService;
+        private IWeaponSlot _weaponSlot;
 
-        public PlayerAttack Construct(IInputService inputService, float attackRadius)
+        public PlayerAttack Construct(IInputService inputService,
+            IWeaponSlot weaponSlot)
         {
             _inputService = inputService;
-            _attackRadius = attackRadius;
+            _weaponSlot = weaponSlot;
 
             return this;
         }
 
         private void Update()
         {
-            if (!_inputService.IsAttackButtonUp()) return;
+            if (_inputService.IsAttackButtonUp())
+            {
+                Attack();
+            }
 
-            Attack();
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color  = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _attackRadius);
+            if (_inputService.IsEquipGunButtonUp())
+            {
+                _weaponSlot.SwitchWeapon(WeaponType.Gun);
+            }
+            else if(_inputService.IsEquipShotgunButtonUp())
+            {
+                _weaponSlot.SwitchWeapon(WeaponType.ShotGun);
+            }
         }
 
         private void Attack()

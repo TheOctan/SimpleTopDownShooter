@@ -30,10 +30,12 @@ namespace OctanGames.Infrastructure.Factory
             GameObject player = _assets.Instantiate(AssetPath.PLAYER_PATH, initialPoint);
             player.GetComponent<PlayerMove>()
                 .Construct(_inputService, playerStaticData.MovementSpeed);
-            player.GetComponent<PlayerAttack>()
-                .Construct(_inputService, playerStaticData.AttackRadius);
-            player.GetComponentInChildren<WeaponSlot>()
+
+            WeaponSlot weaponSlot = player.GetComponentInChildren<WeaponSlot>()
                 .Construct(this);
+
+            player.GetComponent<PlayerAttack>()
+                .Construct(_inputService, weaponSlot);
 
             return player;
         }
