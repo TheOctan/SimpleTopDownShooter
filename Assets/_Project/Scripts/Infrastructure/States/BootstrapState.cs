@@ -3,6 +3,7 @@ using OctanGames.Infrastructure.AssetManagement;
 using OctanGames.Infrastructure.Factory;
 using OctanGames.Services;
 using OctanGames.Services.Input;
+using OctanGames.StaticData;
 using UnityEngine;
 
 namespace OctanGames.Infrastructure.States
@@ -45,9 +46,21 @@ namespace OctanGames.Infrastructure.States
             _serviceLocator.RegisterSingle<IGameStateMachine>(_stateMachine);
             _serviceLocator.RegisterSingle<IAssetProvider>(new AssetProvider());
 
+            RegisterStaticData();
+
             var assetProvider = _serviceLocator.Single<IAssetProvider>();
             var inputService = _serviceLocator.Single<IInputService>();
-            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(assetProvider, inputService));
+            var staticDataService = _serviceLocator.Single<IStaticDataService>();
+            _serviceLocator.RegisterSingle<IGameFactory>(
+                new GameFactory(assetProvider, inputService, staticDataService));
+        }
+
+        private void RegisterStaticData()
+        {
+            IStaticDataService staticData = new StaticDataService();
+            staticData.LoadAllStaticData();
+
+            _serviceLocator.RegisterSingle(staticData);
         }
 
         private static IInputService InputService()

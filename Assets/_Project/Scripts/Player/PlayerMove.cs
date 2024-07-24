@@ -12,9 +12,10 @@ namespace OctanGames.Player
 
         private IInputService _inputService;
 
-        public PlayerMove Construct(IInputService inputService)
+        public PlayerMove Construct(IInputService inputService, float movementSpeed)
         {
             _inputService = inputService;
+            _movementSpeed = movementSpeed;
 
             return this;
         }
