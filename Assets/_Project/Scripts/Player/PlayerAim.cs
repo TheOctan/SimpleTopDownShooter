@@ -6,9 +6,10 @@ namespace OctanGames.Player
     public class PlayerAim : MonoBehaviour
     {
         [SerializeField] private float _aimRadius = 5f;
+        [SerializeField] private float _turnSpeed = 12f;
 
         private IInputService _inputService;
-        private Vector2 _targetDirection;
+        private Vector3 _targetDirection;
 
         public PlayerAim Construct(IInputService inputService, float aimRadius)
         {
@@ -18,21 +19,34 @@ namespace OctanGames.Player
             return this;
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
-            Vector2 inputAxis = _inputService.Axis;
-            if (inputAxis != Vector2.zero)
-            {
-                _targetDirection = inputAxis;
-            }
+            _targetDirection = _inputService.Axis;
 
-            transform.up = _targetDirection;
+            PlayerRotate(_targetDirection);
         }
+
+        private void PlayerRotate(Vector3 direction)
+        {
+            if (direction == Vector3.zero) return;
+
+            Quaternion lookRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            Quaternion targetRotation = Quaternion.Euler(0,0, lookRotation.eulerAngles.z);
+            float turnStep = _turnSpeed * Time.fixedDeltaTime;
+
+            transform.rotation = AccelerateRotation(transform.rotation, targetRotation, turnStep);
+        }
+
+        private static Quaternion AccelerateRotation(Quaternion rotation, Quaternion targetRotation, float turnSpeed) =>
+            turnSpeed > 0
+                ? Quaternion.Slerp(rotation, targetRotation, turnSpeed)
+                : targetRotation;
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _aimRadius);
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawWireSphere(Vector3.zero, _aimRadius);
         }
     }
 }
