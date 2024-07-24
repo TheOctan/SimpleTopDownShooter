@@ -29,6 +29,8 @@ namespace OctanGames.Infrastructure.Factory
             GameObject player = _assets.Instantiate(AssetPath.PLAYER_PATH, initialPoint);
             player.GetComponent<PlayerMove>()
                 .Construct(_inputService, playerStaticData.MovementSpeed);
+            player.GetComponent<PlayerAttack>()
+                .Construct(_inputService, playerStaticData.AttackRadius);
 
             return player;
         }

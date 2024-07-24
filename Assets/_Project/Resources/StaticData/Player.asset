@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   MovementSpeed: 7
-  AttackRadius: 10
+  AttackRadius: 5
