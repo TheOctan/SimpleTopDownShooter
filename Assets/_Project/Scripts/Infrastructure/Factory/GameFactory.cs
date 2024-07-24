@@ -37,6 +37,9 @@ namespace OctanGames.Infrastructure.Factory
             player.GetComponent<PlayerAttack>()
                 .Construct(_inputService, weaponSlot);
 
+            player.GetComponent<PlayerAim>()
+                .Construct(_inputService, playerStaticData.AimRadius);
+
             return player;
         }
 

@@ -11,7 +11,7 @@ namespace OctanGames.Services.Input
                 Vector2 axis = SimpleInputAxis();
                 if (axis == Vector2.zero)
                 {
-                    axis = UnityAxis();
+                    //axis = UnityAxis();
                 }
                 
                 return axis;
