@@ -9,11 +9,12 @@ namespace OctanGames.Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(ServiceLocator services)
+        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator services)
         {
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader)
             };
         }
 
