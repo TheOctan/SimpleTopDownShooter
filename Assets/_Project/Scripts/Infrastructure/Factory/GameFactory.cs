@@ -3,6 +3,7 @@ using OctanGames.Player;
 using OctanGames.Services;
 using OctanGames.Services.Input;
 using OctanGames.StaticData;
+using OctanGames.Weapon;
 using UnityEngine;
 
 namespace OctanGames.Infrastructure.Factory
@@ -31,6 +32,8 @@ namespace OctanGames.Infrastructure.Factory
                 .Construct(_inputService, playerStaticData.MovementSpeed);
             player.GetComponent<PlayerAttack>()
                 .Construct(_inputService, playerStaticData.AttackRadius);
+            player.GetComponentInChildren<WeaponSlot>()
+                .Construct(this);
 
             return player;
         }
@@ -38,6 +41,15 @@ namespace OctanGames.Infrastructure.Factory
         public GameObject CreateHud()
         {
             return _assets.Instantiate(AssetPath.HUD_PATH);
+        }
+
+        public GameObject CreateWeapon(WeaponType weaponType, Transform parent, bool isActive)
+        {
+            WeaponStaticData weaponStaticData = _staticData.ForWeapon(weaponType);
+            GameObject weapon = Object.Instantiate(weaponStaticData.WeaponPrefab, parent);
+            weapon.SetActive(isActive);
+
+            return weapon;
         }
 
         public void Cleanup()

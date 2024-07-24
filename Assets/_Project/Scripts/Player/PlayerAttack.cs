@@ -1,12 +1,14 @@
-﻿using System;
-using OctanGames.Services.Input;
+﻿using OctanGames.Services.Input;
 using UnityEngine;
 
 namespace OctanGames.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
+        [Header("Properties")]
         [SerializeField] private float _attackRadius = 5f;
+        [Header("Components")]
+        [SerializeField] private WeaponSlot _weaponSlot;
 
         private IInputService _inputService;
 
@@ -33,7 +35,7 @@ namespace OctanGames.Player
 
         private void Attack()
         {
-            Debug.Log("Attack");
+            _weaponSlot.Fire();
         }
     }
 }

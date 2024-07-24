@@ -1,4 +1,5 @@
 using OctanGames.StaticData;
+using OctanGames.Weapon;
 
 namespace OctanGames.Services
 {
@@ -6,5 +7,6 @@ namespace OctanGames.Services
     {
         void LoadAllStaticData();
         PlayerStaticData ForPlayer();
+        WeaponStaticData ForWeapon(WeaponType weaponType);
     }
 }
