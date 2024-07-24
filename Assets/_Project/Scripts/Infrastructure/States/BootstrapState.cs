@@ -1,4 +1,5 @@
 using OctanGames.Infrastructure.AssetManagement;
+using OctanGames.Infrastructure.Factory;
 using OctanGames.Services;
 
 namespace OctanGames.Infrastructure.States
@@ -39,6 +40,7 @@ namespace OctanGames.Infrastructure.States
         {
             _serviceLocator.RegisterSingle<IGameStateMachine>(_stateMachine);
             _serviceLocator.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(_serviceLocator.Single<IAssetProvider>()));
         }
     }
 }
