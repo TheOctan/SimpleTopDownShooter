@@ -64,7 +64,7 @@ namespace OctanGames.Infrastructure.Factory
 
             return Object
                 .Instantiate(weaponStaticData.BulletPrefab, bulletPivot.position, bulletPivot.rotation)
-                .Construct(weaponStaticData.BulletSpeed, weaponStaticData.BulletLifeTime);
+                .Construct(weaponStaticData.BulletSpeed, weaponStaticData.BulletLifeTime, weaponStaticData.Damage);
         }
 
         public void Cleanup()

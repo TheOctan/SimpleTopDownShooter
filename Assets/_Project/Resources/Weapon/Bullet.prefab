@@ -99,3 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 10
   _lifeTime: 3
+  _damage: 1
+  _collisionMask:
+    serializedVersion: 2
+    m_Bits: 1024
