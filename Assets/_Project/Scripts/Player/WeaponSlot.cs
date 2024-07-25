@@ -9,13 +9,13 @@ namespace OctanGames.Player
     {
         private IGameFactory _gameFactory;
 
-        private Dictionary<WeaponType, GameObject> _weapons;
-        private GameObject _currentWeapon;
+        private Dictionary<WeaponType, IWeapon> _weapons;
+        private IWeapon _currentWeapon;
 
         public WeaponSlot Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
-            _weapons = new Dictionary<WeaponType, GameObject>()
+            _weapons = new Dictionary<WeaponType, IWeapon>()
             {
                 [WeaponType.Gun] = _gameFactory.CreateWeapon(WeaponType.Gun, transform, false),
                 [WeaponType.ShotGun] = _gameFactory.CreateWeapon(WeaponType.ShotGun, transform, false),
@@ -28,19 +28,16 @@ namespace OctanGames.Player
 
         public void SwitchWeapon(WeaponType weaponType)
         {
-            if (!_weapons.TryGetValue(weaponType, out GameObject weapon)) return;
+            if (!_weapons.TryGetValue(weaponType, out IWeapon weapon)) return;
 
-            if (_currentWeapon != null)
-            {
-                _currentWeapon.SetActive(false);
-            }
+            _currentWeapon?.Hide();
             _currentWeapon = weapon;
-            _currentWeapon.SetActive(true);
+            _currentWeapon.Equip();
         }
 
         public void Fire()
         {
-            
+            _currentWeapon.Fire();
         }
     }
 }

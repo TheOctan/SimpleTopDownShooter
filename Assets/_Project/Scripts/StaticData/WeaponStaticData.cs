@@ -8,5 +8,10 @@ namespace OctanGames.StaticData
     {
         public WeaponType WeaponType;
         public GameObject WeaponPrefab;
+
+        [Header("Bullet")]
+        public Bullet BulletPrefab;
+        public float BulletSpeed = 10f;
+        public float BulletLifeTime = 3f;
     }
 }

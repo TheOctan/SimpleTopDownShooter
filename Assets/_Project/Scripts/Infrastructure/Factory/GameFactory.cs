@@ -5,6 +5,7 @@ using OctanGames.Services.Input;
 using OctanGames.StaticData;
 using OctanGames.Weapon;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace OctanGames.Infrastructure.Factory
 {
@@ -48,13 +49,22 @@ namespace OctanGames.Infrastructure.Factory
             return _assets.Instantiate(AssetPath.HUD_PATH);
         }
 
-        public GameObject CreateWeapon(WeaponType weaponType, Transform parent, bool isActive)
+        public IWeapon CreateWeapon(WeaponType weaponType, Transform parent, bool isActive)
         {
             WeaponStaticData weaponStaticData = _staticData.ForWeapon(weaponType);
             GameObject weapon = Object.Instantiate(weaponStaticData.WeaponPrefab, parent);
             weapon.SetActive(isActive);
 
-            return weapon;
+            return weapon.GetComponent<Gun>().Construct(this, weaponType);
+        }
+
+        public Bullet CreateBullet(WeaponType weaponType, Transform bulletPivot)
+        {
+            WeaponStaticData weaponStaticData = _staticData.ForWeapon(weaponType);
+
+            return Object
+                .Instantiate(weaponStaticData.BulletPrefab, bulletPivot.position, bulletPivot.rotation)
+                .Construct(weaponStaticData.BulletSpeed, weaponStaticData.BulletLifeTime);
         }
 
         public void Cleanup()

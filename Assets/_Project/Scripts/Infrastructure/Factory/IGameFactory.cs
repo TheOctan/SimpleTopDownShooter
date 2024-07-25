@@ -9,6 +9,7 @@ namespace OctanGames.Infrastructure.Factory
         GameObject CreateHero(Vector3 initialPoint);
         GameObject CreateHud();
         void Cleanup();
-        GameObject CreateWeapon(WeaponType weaponType, Transform parent, bool isActive);
+        IWeapon CreateWeapon(WeaponType weaponType, Transform parent, bool isActive);
+        Bullet CreateBullet(WeaponType weaponType, Transform bulletPivot);
     }
 }
