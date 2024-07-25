@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OctanGames.Infrastructure.Factory;
 using OctanGames.Logic;
 using OctanGames.Services;
 
@@ -15,7 +16,7 @@ namespace OctanGames.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain),
+                [typeof(LoadLevelState)] = GetLoadLevelState(sceneLoader, curtain, services),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }
@@ -30,6 +31,14 @@ namespace OctanGames.Infrastructure.States
         {
             IPayLoadedState<TPayload> state = ChangeState<TState>();
             state.Enter(payload);
+        }
+
+        private LoadLevelState GetLoadLevelState(SceneLoader sceneLoader, LoadingCurtain curtain,
+            ServiceLocator services)
+        {
+            return new LoadLevelState(this, sceneLoader,
+                curtain,
+                services.Single<IGameFactory>());
         }
 
         private TState ChangeState<TState>() where TState : class, IExitableState
