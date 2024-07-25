@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace OctanGames.Enemy
+namespace OctanGames.Props
 {
     public interface IDamageable
     {

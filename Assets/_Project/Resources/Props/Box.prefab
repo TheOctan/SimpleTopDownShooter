@@ -171,3 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724089f6691649668a63076590acb3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyFx: {fileID: 119183615461286708, guid: 141e1779869c79845bd243610f187f47, type: 3}
+  _renderer: {fileID: 4829426561574233843}
+  _brokenBox: {fileID: 21300000, guid: ee71e1b5f8f9779499632fdde081bac8, type: 3}
+  _maxHitPoints: 2

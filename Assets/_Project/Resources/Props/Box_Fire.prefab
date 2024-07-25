@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 779305416770897371}
   - component: {fileID: 7629524792202149984}
   - component: {fileID: 4970525558115950902}
-  - component: {fileID: 2913278440691261731}
   - component: {fileID: 6812739762058819381}
+  - component: {fileID: 8308291083298730705}
   m_Layer: 10
   m_Name: Box_Fire
   m_TagString: Untagged
@@ -133,18 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.18, y: 5.18}
   m_EdgeRadius: 0
---- !u!114 &2913278440691261731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409373727085503367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724089f6691649668a63076590acb3a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &6812739762058819381
 Rigidbody2D:
   serializedVersion: 4
@@ -172,6 +160,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8308291083298730705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409373727085503367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d14b9b97bd43cda181742e0abeea1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionPrefab: {fileID: 725748389856807714, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
 --- !u!1 &6991128416935818288
 GameObject:
   m_ObjectHideFlags: 0
