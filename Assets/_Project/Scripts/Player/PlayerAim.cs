@@ -11,16 +11,20 @@ namespace OctanGames.Player
     {
         private const float AIM_DELAY = 1f;
 
+        [Header("Properties")]
         [SerializeField] private float _aimRadius = 5f;
         [SerializeField] private float _turnSpeed = 12f;
         [SerializeField] private LayerMask _mask;
+
+        [Header("Components")]
+        [SerializeField] private GameObject _crossHairsPrefab;
 
         private IInputService _inputService;
         private Vector3 _targetDirection;
 
         private readonly Collider2D[] _aimTargets = new Collider2D[5];
         private Transform _currentAimTarget;
-        private int _lastHitCount;
+        private GameObject _crossHairs;
 
         public PlayerAim Construct(IInputService inputService, float aimRadius)
         {
@@ -30,6 +34,12 @@ namespace OctanGames.Player
             return this;
         }
 
+        private void Start()
+        {
+            _crossHairs = Instantiate(_crossHairsPrefab);
+            _crossHairs.SetActive(false);
+        }
+
         private void OnEnable()
         {
             StartCoroutine(FindNearestTarget());
@@ -37,11 +47,29 @@ namespace OctanGames.Player
 
         public void FixedUpdate()
         {
-            _targetDirection = _currentAimTarget != null
-                ? _currentAimTarget.position - transform.position
-                : _inputService.Axis;
+            if (_currentAimTarget != null)
+            {
+                _targetDirection = _currentAimTarget.position - transform.position;
+                ShowCrossHairs();
+            }
+            else
+            {
+                _targetDirection = _inputService.Axis;
+                HideCrossHairs();
+            }
 
             PlayerRotate(_targetDirection);
+        }
+
+        private void ShowCrossHairs()
+        {
+            _crossHairs.SetActive(true);
+            _crossHairs.transform.position = _currentAimTarget.position;
+        }
+
+        private void HideCrossHairs()
+        {
+            _crossHairs.SetActive(false);
         }
 
         private IEnumerator FindNearestTarget()
@@ -63,8 +91,6 @@ namespace OctanGames.Player
                 {
                     _currentAimTarget = null;
                 }
-
-                _lastHitCount = hitCount;
 
                 yield return new WaitForSeconds(AIM_DELAY);
             }
