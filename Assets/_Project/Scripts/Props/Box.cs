@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace OctanGames.Props
 {
-    public class Box : MonoBehaviour, IDamageable
+    public class Box : MonoBehaviour, IDamagable
     {
-        private const float EFFECT_LIFE_TIME = 1.5f;
-
-        [SerializeField] private GameObject _destroyFx;
-
+        [Header("Properties")]
+        [SerializeField] private bool _ignoreAim;
+        [SerializeField] private float _maxHitPoints = 2f;
         [Space]
+        [SerializeField] private GameObject _destroyFx;
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private Sprite _brokenBox;
-        [SerializeField] private float _maxHitPoints = 2f;
 
         private float _currentHitPoints;
+        public bool IgnoreAim => _ignoreAim;
 
         private void Start()
         {

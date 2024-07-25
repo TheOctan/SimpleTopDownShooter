@@ -2,11 +2,14 @@
 
 namespace OctanGames.Props
 {
-    public class ExplosionBox : MonoBehaviour, IDamageable
+    public class ExplosionBox : MonoBehaviour, IDamagable
     {
+        [SerializeField] private bool _ignoreAim;
         [SerializeField] private GameObject _explosionPrefab;
 
         private bool _isDamaged;
+
+        public bool IgnoreAim => _ignoreAim;
 
         public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
         {

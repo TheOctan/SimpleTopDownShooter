@@ -47,7 +47,7 @@ namespace OctanGames.Weapon
 
         private void HitObject(Collider2D hitCollider, Vector3 hitPoint)
         {
-            if (hitCollider.TryGetComponent(out IDamageable damageable))
+            if (hitCollider.TryGetComponent(out IDamagable damageable))
             {
                 damageable.TakeHit(_damage, hitPoint, transform.up);
             }

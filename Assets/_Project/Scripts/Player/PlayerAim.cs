@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using OctanGames.Props;
 using OctanGames.Services.Input;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ namespace OctanGames.Player
                 if (hitCount > 0)
                 {
                     _currentAimTarget = _aimTargets
-                        .Where(e => e != null)
+                        .Where(IsAimTarget)
                         .OrderBy(e => (transform.position - e.transform.position).sqrMagnitude)
                         .FirstOrDefault()
                         ?.transform;
@@ -70,6 +71,11 @@ namespace OctanGames.Player
 
             _currentAimTarget = null;
         }
+
+        private static bool IsAimTarget(Collider2D e) =>
+            e != null
+            && e.TryGetComponent(out IDamagable damageable)
+            && !damageable.IgnoreAim;
 
         private void PlayerRotate(Vector3 direction)
         {

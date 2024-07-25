@@ -300,6 +300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4171269568942707893, guid: 1ed5219bfdfcfcd4fb4c508f46ce8a26, type: 3}
+      propertyPath: _ignoreAim
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
