@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using OctanGames.Props;
 using OctanGames.Services.Input;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace OctanGames.Player
 {
     public class PlayerAim : MonoBehaviour
     {
-        private const float AIM_DELAY = 1f;
+        private const float AIM_DELAY = 0.2f;
 
         [Header("Properties")]
         [SerializeField] private float _aimRadius = 5f;
@@ -76,20 +75,19 @@ namespace OctanGames.Player
         {
             while (enabled)
             {
-                Array.Clear(_aimTargets, 0, _aimTargets.Length);
+                ClearAimTarget();
+
                 int hitCount = Physics2D.OverlapCircleNonAlloc(transform.position, _aimRadius, _aimTargets, _mask);
 
-                if (hitCount > 0)
+                float nearestAimDistance = float.PositiveInfinity;
+                for (var i = 0; i < hitCount; i++)
                 {
-                    _currentAimTarget = _aimTargets
-                        .Where(IsAimTarget)
-                        .OrderBy(e => (transform.position - e.transform.position).sqrMagnitude)
-                        .FirstOrDefault()
-                        ?.transform;
-                }
-                else
-                {
-                    _currentAimTarget = null;
+                    Collider2D aimTarget = _aimTargets[i];
+                    float aimSqrDistance = AimSqrDistance(aimTarget);
+                    if (!IsAimTarget(aimTarget) || aimSqrDistance >= nearestAimDistance) continue;
+
+                    nearestAimDistance = aimSqrDistance;
+                    _currentAimTarget = aimTarget.transform;
                 }
 
                 yield return new WaitForSeconds(AIM_DELAY);
@@ -98,10 +96,18 @@ namespace OctanGames.Player
             _currentAimTarget = null;
         }
 
-        private static bool IsAimTarget(Collider2D e) =>
-            e != null
-            && e.TryGetComponent(out IDamagable damageable)
+        private void ClearAimTarget()
+        {
+            Array.Clear(_aimTargets, 0, _aimTargets.Length);
+            _currentAimTarget = null;
+        }
+
+        private static bool IsAimTarget(Component e) =>
+            e.TryGetComponent(out IDamagable damageable)
             && !damageable.IgnoreAim;
+
+        private float AimSqrDistance(Component e) =>
+            (transform.position - e.transform.position).sqrMagnitude;
 
         private void PlayerRotate(Vector3 direction)
         {
